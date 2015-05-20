@@ -1,4 +1,5 @@
 
+<!DOCTYPE html>
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
@@ -9,8 +10,35 @@
 
 <p>Hello ${user.systemId}!</p>
 
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Identifier</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="patient" items="${patientList}" varStatus="status">
+
+        <tr>
+
+            <td><a href="encounter.form?patientId=${patient.patientId}">${patient.givenName}</a></td>
+            <%--<td>${patient.givenName}</td>--%>
+            <td>${patient.age}</td>
+            <td>${patient.gender}</td>
+            <td>${patient.identifiers}</td>
+
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+<br>
+<br>
+
 Add new Patient......
-<form action="<c:url value='/module/patientlist/addpatient.form' />" method='POST'>
+<form action="<c:url value='/module/patientlist/register.form' />" method='get'>
 
 First Name:
     <br>
@@ -26,7 +54,7 @@ First Name:
     Age:<br>
     <input type="date" placeholder="Date Of Birth" name="patient_dob" required><br>
 Gender:<br>
-    <select name="patient_gender">
+    <select name="patient_gender" required >
         <option >Select gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>

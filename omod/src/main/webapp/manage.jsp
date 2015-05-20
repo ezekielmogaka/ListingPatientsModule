@@ -37,7 +37,7 @@
 <br>
 
 Add new Patient......
-<form action="<c:url value='/module/patientlist/addpatient.form' />" method='POST'>
+<form action="<c:url value='/module/patientlist/register.form' />" method='get'>
 
 First Name:
     <br>
@@ -50,10 +50,10 @@ First Name:
     <input type="text" placeholder="OpenMRSId" name="patient_openMRSId" required><br>
    Address:<br>
     <input type="text" placeholder="Address" name="patient_address" required><br>
-    Age:<br>
+    Date of Birth:<br>
     <input type="date" placeholder="Date Of Birth" name="patient_dob" required><br>
 Gender:<br>
-    <select name="patient_gender">
+    <select name="patient_gender" required>
         <option >Select gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>

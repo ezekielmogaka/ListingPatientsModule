@@ -15,10 +15,7 @@ package org.openmrs.module.patientlist.web.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
-import org.openmrs.PersonAddress;
-import org.openmrs.PersonName;
+import org.openmrs.*;
 import org.openmrs.api.context.Context;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,12 +45,69 @@ public class  PatientListManageController {
 
 	}
 	@RequestMapping(value = "/module/patientlist/register.form", method = RequestMethod.GET)
-	public void registrationform(ModelMap model) {
-		model.addAttribute("user", Context.getAuthenticatedUser());
+	public void registrationform(@RequestParam(value = "patient_first_name", required = false) String first_name,
+								 @RequestParam(value = "patient_middle_name", required = false) String middle_name,
+								 @RequestParam(value = "patient_family_name", required = false) String family_name,
+								 @RequestParam(value = "patient_openMRSId", required = false) String openMRSId,
+								 @RequestParam(value = "patient_address", required = false) String address,
+								 @RequestParam(value = "patient_dob", required = false) String dob,
+								 @RequestParam(value = "patient_gender", required = false) String gender
+	) {
+		int id = Integer.parseInt(openMRSId);//converting to int
+
+		String expectedPattern = "dd/MM/yyyy";
+		SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+		try {
+			// give the formatter a String that matches the SimpleDateFormat pattern
+			Date date = formatter.parse(dob);
+
+
+			Patient patient = new Patient();
+			PersonName personName = new PersonName();
+			PersonAddress personAddress = new PersonAddress();
+
+			PatientIdentifier patientIdentifier = new PatientIdentifier();
+            PatientIdentifierType patientIdentifierType = Context.getPatientService().getPatientIdentifierTypeByUuid("8d79403a-c2cc-11de-8d13-0010c6dffd0f");
+            patientIdentifier.setDateCreated(new Date());
+            patientIdentifier.setIdentifierType(patientIdentifierType);
+            patientIdentifier.setLocation(Context.getLocationService().getDefaultLocation());
+            patientIdentifier.setIdentifier(String.valueOf(id));
+            patientIdentifier.setPreferred(true);
+
+			/*patientIdentifier.setPatientIdentifierId(id);*/
+
+
+			personName.setGivenName(first_name);
+			personName.setMiddleName(middle_name);
+			personName.setFamilyName(family_name);
+
+
+			personAddress.setAddress1(address);
+
+			patient.addAddress(personAddress);
+			patient.addName(personName);
+			patient.setBirthdate(date);
+			patient.addIdentifier(patientIdentifier);
+			patient.setGender(gender);
+			Context.getPatientService().savePatient(patient);
+
+
+
+
+
+
+		} catch (ParseException e) {
+			// execution will come here if the String that is given
+			// does not match the expected format.
+			e.printStackTrace();
+		}
+		//model.setViewName(manage);
+		// return model;
+
 
 	}
 
-	@RequestMapping(value = "/module/patientlist/addpatient.form", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/module/patientlist/addpatient.form", method = RequestMethod.POST)
 	public void add_patient(@RequestParam(value = "patient_first_name", required = false) String first_name,
 							@RequestParam(value = "patient_middle_name", required = false) String middle_name,
 							@RequestParam(value = "patient_family_name", required = false) String family_name,
@@ -109,6 +163,6 @@ public class  PatientListManageController {
 		// return model;
 
 
-	}
+	}*/
 
 }
