@@ -5,7 +5,7 @@
 
 <%@ include file="template/localHeader.jsp"%>
 
-<p>Hello ${user.systemId}!</p>
+<%--<p>Hello ${user.systemId}!</p>--%>
 <div class="row">
     <div class="jumbotron col-md-4 col-md-offset-4">
 
@@ -13,7 +13,7 @@
 
         <h2 class="text-center">Register a new patient</h2>
         <div class="form-group col-md-offset-2 col-md-8">
-<form action="<c:url value='/module/patientlist/register.form' />" method='get'>
+<form role="form" action="<c:url value='/module/patientlist/register.form' />" method='get'>
     <div class="form-group">
 
         First Name:
@@ -27,8 +27,8 @@
         <input type="text" class="form-control" placeholder="National ID" name="patient_openMRSId" size="30" required><br>
         Address:<br>
         <input type="text" class="form-control" placeholder="Address" name="patient_address" size="30" required><br>
-        Age:<br>
-        <input type="date" class="form-control" placeholder="Date Of Birth" name="patient_dob" size="30" required><br>
+        Date OF Birth:<br>
+        <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="patient_dob" size="30" required><br>
         Gender:<br>
         <select name="patient_gender" required >
             <option >Select gender</option>
@@ -40,7 +40,9 @@
         <br>
 
         <input type="submit" class="btn btn-success" value="Register">
+        </div>
 
 </form>
+            </div>
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>

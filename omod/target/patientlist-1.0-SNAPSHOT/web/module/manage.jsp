@@ -2,13 +2,14 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="template/localHeader.jsp"%>
 
+<div class ="row">
 
+<%--<p>Hello ${user.systemId}!</p>--%>
+<h2 class="text-center">List of All patients</h2>
 
-<p>Hello ${user.systemId}!</p>
-
-<table class="table table-bordered table-responsive table-hover">
+<table class="table table-striped" width="647">
     <thead>
-    <tr>
+    <tr class="success">
         <th>First Name</th>
         <th>Middle Name</th>
         <th>Family Name</th>
@@ -38,8 +39,8 @@
 
 
 <h2 class="text-center">Register a new patient</h2>
-< class="form-group col-md-offset-2 col-md-4">
-    <form action="<c:url value='/module/patientlist/register.form' />" method='get'>
+<div class = "form-group col-md-offset-2 col-md-2">
+    <form role="form" action="<c:url value='/module/patientlist/register.form' />" method='get'>
 
         First Name:
         <br>
@@ -53,7 +54,7 @@
         Address:<br>
         <input type="text" class="form-control" placeholder="Address" name="patient_address" size="30" required><br>
         Age:<br>
-        <input type="date" class="form-control" placeholder="Date Of Birth" name="patient_dob" size="30" required><br>
+        <input type="date" class="form-control" placeholder="dd/mm/yyyy" name="patient_dob" size="30" required><br>
         Gender:<br>
         <select name="patient_gender" required >
             <option >Select gender</option>
@@ -67,4 +68,7 @@
         <input type="submit" class="btn btn-success" value="Register">
 
     </form>
+
+</div>
+</div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
